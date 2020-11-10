@@ -1,0 +1,14 @@
+Как TCP сервер:
+1. AT
+2. AT+RST
+3. AT+CWMODE=1
+4. AT+CWQAP
+5. AT+CWJAP="POINT","PASS"
+6. AT+CIPMODE=0
+7. AT+CIPMUX=1
+8. AT+CIPSERVER=1,1555
+
+
+Для подключения к TCP серверу:
+1. AT+CIPMUX=1
+2. AT+CIPSTART=1,"TCP","45.90.35.123",1555

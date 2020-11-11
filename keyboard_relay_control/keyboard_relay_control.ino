@@ -51,6 +51,9 @@ void loop() {
         case 'C' :
       pins_reset();
           break;
+        case 'A' :
+        pins_on();
+        break;
     }
   }
 }
@@ -65,5 +68,12 @@ void pins_reset() {
 for(int i = 0; i < 5; i++){
     digitalWrite(OUT_PINS[i], LOW);
     out_pins_state[i] = false;
+  }
+}
+
+void pins_on(){
+for(int i = 0; i < 5; i++){
+    digitalWrite(OUT_PINS[i], HIGH);
+    out_pins_state[i] = true;
   }
 }

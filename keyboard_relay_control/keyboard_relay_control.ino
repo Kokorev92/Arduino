@@ -11,8 +11,8 @@ constexpr char keys[ROWS][COLS] = {
   {'*','0','#','D'}
 };
 
-constexpr byte row_pins[ROWS] = {14, 15, 16, 17};
-constexpr byte col_pins[COLS] = {18, 19, 20, 21};
+constexpr byte row_pins[ROWS] = {9, 8, 7, 6};
+constexpr byte col_pins[COLS] = {5, 4, 3 ,2};
 
 Keypad keypad = Keypad(makeKeymap(keys), row_pins, col_pins, ROWS, COLS);
 

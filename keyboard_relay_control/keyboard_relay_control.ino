@@ -7,6 +7,7 @@ const byte ROWS = 4;
 const byte COLS = 4;
 const int OUT_PINS[] = {A0, A1, A2, A3, A4};
 bool out_pins_state[5];
+byte pins_state = 0;
 
 const char keys[ROWS][COLS] = {
   {'1', '2', '3', 'A'},
@@ -22,10 +23,13 @@ Keypad keypad = Keypad(makeKeymap(keys), row_pins, col_pins, ROWS, COLS);
 
 void setup() {
   Serial.begin(9600);
+  pins_state = EEPROM.read(0);
+  
   for (int i = 0; i < 5; i++) {
     pinMode(OUT_PINS[i], OUTPUT);
-    digitalWrite(OUT_PINS[i], LOW);
-    out_pins_state[i] = false;
+
+    out_pins_state[i] = (bool((1 << i) & pins_state));
+    digitalWrite(OUT_PINS[i], out_pins_state[i] ? HIGH:LOW);
   }
 }
 
@@ -64,6 +68,7 @@ void pin_toggle(int pin) {
   out_pins_state[pin] = !out_pins_state[pin];
   digitalWrite(OUT_PINS[pin], out_pins_state[pin] ? HIGH : LOW);
   Serial.println(pin);
+  eeprom_write();
 }
 
 void pins_reset() {
@@ -71,6 +76,7 @@ void pins_reset() {
     digitalWrite(OUT_PINS[i], LOW);
     out_pins_state[i] = false;
   }
+  eeprom_write();
 }
 
 void pins_on() {
@@ -78,4 +84,17 @@ void pins_on() {
     digitalWrite(OUT_PINS[i], HIGH);
     out_pins_state[i] = true;
   }
+  eeprom_write();
+}
+
+void eeprom_write() {
+  for(int i = 0; i < 5; i++) {
+    if(out_pins_state[i]) {
+      pins_state |= (1 << i);
+    } else {
+      pins_state &= ~(1 << i);
+    }
+  }
+
+  EEPROM.update(0, pins_state);
 }

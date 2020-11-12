@@ -1,3 +1,5 @@
+#include <EEPROM.h>
+
 #include <Keypad.h>
 #include <Key.h>
 

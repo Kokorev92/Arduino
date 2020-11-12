@@ -64,6 +64,7 @@ void loop() {
   }
 }
 
+// Функция переключения состояни пина
 void pin_toggle(int pin) {
   out_pins_state[pin] = !out_pins_state[pin];
   digitalWrite(OUT_PINS[pin], out_pins_state[pin] ? HIGH : LOW);
@@ -71,6 +72,7 @@ void pin_toggle(int pin) {
   eeprom_write();
 }
 
+// Функция сброса всех пинов
 void pins_reset() {
   for (int i = 0; i < 5; i++) {
     digitalWrite(OUT_PINS[i], LOW);
@@ -79,6 +81,7 @@ void pins_reset() {
   eeprom_write();
 }
 
+// Функция включения всех пинов
 void pins_on() {
   for (int i = 0; i < 5; i++) {
     digitalWrite(OUT_PINS[i], HIGH);
@@ -87,6 +90,8 @@ void pins_on() {
   eeprom_write();
 }
 
+// Функция сохранения состояния пинов в eeprom
+// Вызывается каждый раз при изменение состояния пинов
 void eeprom_write() {
   for(int i = 0; i < 5; i++) {
     if(out_pins_state[i]) {

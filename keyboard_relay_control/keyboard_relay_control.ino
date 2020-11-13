@@ -24,12 +24,12 @@ Keypad keypad = Keypad(makeKeymap(keys), row_pins, col_pins, ROWS, COLS);
 void setup() {
   Serial.begin(9600);
   pins_state = EEPROM.read(0);
-  
+
   for (int i = 0; i < 5; i++) {
     pinMode(OUT_PINS[i], OUTPUT);
 
     out_pins_state[i] = (bool((1 << i) & pins_state));
-    digitalWrite(OUT_PINS[i], out_pins_state[i] ? HIGH:LOW);
+    digitalWrite(OUT_PINS[i], out_pins_state[i] ? LOW : HIGH);
   }
 }
 
@@ -67,7 +67,7 @@ void loop() {
 // Функция переключения состояни пина
 void pin_toggle(int pin) {
   out_pins_state[pin] = !out_pins_state[pin];
-  digitalWrite(OUT_PINS[pin], out_pins_state[pin] ? HIGH : LOW);
+  digitalWrite(OUT_PINS[pin], out_pins_state[pin] ? LOW : HIGH);
   Serial.println(pin);
   eeprom_write();
 }
@@ -75,8 +75,8 @@ void pin_toggle(int pin) {
 // Функция сброса всех пинов
 void pins_reset() {
   for (int i = 0; i < 5; i++) {
-    digitalWrite(OUT_PINS[i], LOW);
     out_pins_state[i] = false;
+    digitalWrite(OUT_PINS[i], out_pins_state[i] ? LOW : HIGH);
   }
   eeprom_write();
 }
@@ -84,8 +84,9 @@ void pins_reset() {
 // Функция включения всех пинов
 void pins_on() {
   for (int i = 0; i < 5; i++) {
-    digitalWrite(OUT_PINS[i], HIGH);
     out_pins_state[i] = true;
+    digitalWrite(OUT_PINS[i],out_pins_state[i] ? LOW : HIGH);
+    
   }
   eeprom_write();
 }
@@ -93,8 +94,8 @@ void pins_on() {
 // Функция сохранения состояния пинов в eeprom
 // Вызывается каждый раз при изменение состояния пинов
 void eeprom_write() {
-  for(int i = 0; i < 5; i++) {
-    if(out_pins_state[i]) {
+  for (int i = 0; i < 5; i++) {
+    if (out_pins_state[i]) {
       pins_state |= (1 << i);
     } else {
       pins_state &= ~(1 << i);

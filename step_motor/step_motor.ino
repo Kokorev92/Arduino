@@ -46,6 +46,12 @@ void loop() {
         digitalWrite(direction_pin, LOW);
         Serial.println("Direction to right");
         break;
+     case 'o':
+        for(int i=1; i<50; i++){
+          step_motor();
+          delay(10);
+        }
+        break;
     }
   }
 }

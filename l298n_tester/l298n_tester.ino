@@ -10,6 +10,6 @@ void setup() {
 }
 
 void loop() {
-  motor.step(1);
+  motor.step(-1);
   delay(10);
 }

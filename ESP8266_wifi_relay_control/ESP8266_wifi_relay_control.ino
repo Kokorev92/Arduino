@@ -15,7 +15,7 @@ void setup() {
 
   WiFi.begin(ssid, password);
 
-  while(WiFi.status() != WL_CONNECTED){
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
 
@@ -30,14 +30,16 @@ void setup() {
 
 void loop() {
   WiFiClient client = server.available();
-  if(!client) {
+  if (!client) {
     return;
   }
 
   Serial.println("New client connected");
-  while(!client.available()){
+  while (!client.available()) {
     delay(1);
   }
+
+  String html = "<html>\r\n<body>\r\n<input type=\"button\" id=\"btn_on\" value=\"ON\" style=\"width: 100%; height: 100px;\"/><br/>\r\n<input type=\"button\" id=\"btn_off\" value=\"OFF\" style=\"width: 100%; height: 100px;\"/><br/>\r\n</body>\r\n<script>\r\nbtn_on.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/1\", true);\r\nreq.send(null);\r\n}\r\nbtn_off.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/0\", true);\r\nreq.send(null);\r\n}\r\n</script>\r\n</html>";
 
   String req = client.readStringUntil('\r');
   Serial.println(req);
@@ -46,10 +48,14 @@ void loop() {
 
   int val;
 
-  if(req.indexOf("/gpio/0") != -1){
+  if (req.indexOf("/gpio/0") != -1) {
     val = LOW;
-  } else if(req.indexOf("gpio/1") != -1){
+  } else if (req.indexOf("gpio/1") != -1) {
     val = HIGH;
+  } else if (req.indexOf("/ HTTP") != -1) {
+    client.print(html);
+    client.flush();
+    return;
   } else {
     Serial.println("Invalid request");
     client.stop();
@@ -58,10 +64,4 @@ void loop() {
 
   digitalWrite(2, val);
   client.flush();
-
-  String ans = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n>html>\r\nGPIO is now ";
-  ans += (val) ? "high" : "low";
-  ans += "</html>\n";
-
-  client.print(ans);
 }

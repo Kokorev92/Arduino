@@ -39,7 +39,7 @@ void loop() {
     delay(1);
   }
 
-  String html = "<html>\r\n<body>\r\n<input type=\"button\" id=\"btn_on\" value=\"ON\" style=\"width: 100%; height: 100px;\"/><br/>\r\n<input type=\"button\" id=\"btn_off\" value=\"OFF\" style=\"width: 100%; height: 100px;\"/><br/>\r\n</body>\r\n<script>\r\nbtn_on.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/1\", true);\r\nreq.send(null);\r\n}\r\nbtn_off.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/0\", true);\r\nreq.send(null);\r\n}\r\n</script>\r\n</html>";
+  String html = "<html>\r\n<body>\r\n<input type=\"button\" id=\"btn_on\" value=\"ON\" style=\"font-size: 64pt;\"/><br/><br/>\r\n<input type=\"button\" id=\"btn_off\" value=\"OFF\" style=\"font-size: 64pt;\"/><br/>\r\n</body>\r\n<script>\r\nbtn_on.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/1\", true);\r\nreq.send(null);\r\n}\r\nbtn_off.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/0\", true);\r\nreq.send(null);\r\n}\r\n</script>\r\n</html>";
 
   String req = client.readStringUntil('\r');
   Serial.println(req);

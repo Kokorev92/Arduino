@@ -41,9 +41,6 @@ void loop() {
     int t = analogRead( tempPin );
     float tr = 1023.0 / t - 1;
     tr = SERIAL_R / tr;
-//    Serial.print("R=");
-//    Serial.print(tr);
-//    Serial.print(", t=");
 
     float steinhart;
     steinhart = tr / THERMISTOR_R; // (R/Ro)

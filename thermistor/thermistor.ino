@@ -1,8 +1,3 @@
-#define B 3950 // B-коэффициент
-#define SERIAL_R 100000 // сопротивление последовательного резистора, 102 кОм
-#define THERMISTOR_R 100000 // номинальное сопротивления термистора, 100 кОм
-#define NOMINAL_T 25 // номинальная температура (при которой TR = 100 кОм)
-
 class Average {
 
   public:
@@ -30,6 +25,10 @@ class Average {
 Average average;
 
 const byte tempPin = A0;
+const int B =  3950; // B-коэффициент
+const int SERIAL_R = 100000; // сопротивление последовательного резистора, 102 кОм
+const int THERMISTOR_R = 100000; // номинальное сопротивления термистора, 100 кОм
+const int NOMINAL_T = 25; // номинальная температура (при которой TR = 100 кОм)
 
 void setup() {
   Serial.begin( 9600 );

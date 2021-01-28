@@ -1,3 +1,5 @@
+#include <DHT.h>
+
 #include <LiquidCrystal.h>
 
 class Average {
@@ -28,9 +30,13 @@ const int rs_pin = 2;
 const int e_pin = 3;
 const int data_pins[4] = {4, 5, 6, 7};
 
+const int dht_pin = 8;
+
 LiquidCrystal lcd(2, 3, data_pins[0], data_pins[1], data_pins[2], data_pins[3]);
 
 Average average;
+
+DHT dht(dht_pin, DHT11);
 
 const byte tempPin = A0;
 const int B =  3950; // B-коэффициент
@@ -43,6 +49,7 @@ void setup() {
   pinMode( tempPin, INPUT );
   lcd.begin(16, 2);
   lcd.setCursor(0, 0);
+  dht.begin();
 }
 
 void loop() {
@@ -59,5 +66,15 @@ void loop() {
   lcd.print("TEMP: ");
   lcd.print(average.get_value());
   average.reset();
+
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  lcd.setCursor(0, 1);
+  lcd.print(h);
+  lcd.print("% ");
+  lcd.print(t);
+  lcd.print("C");
+
   delay(1000);
 }

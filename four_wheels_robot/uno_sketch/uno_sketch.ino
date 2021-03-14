@@ -38,7 +38,7 @@ void loop() {
 
 
 void run_motors(int speed, int direction, AF_DCMotor *motors) {
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < sizeof(motors); i++) {
     motors[i].setSpeed(speed);
     motors[i].run(direction);
   }

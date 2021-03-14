@@ -1,4 +1,5 @@
 #include <ESP8266WiFi.h>
+#include "index.h"
 
 const char* ssid = "MyHomeWIFI";
 const char* password = "gtl53wqm41";
@@ -27,16 +28,16 @@ void loop() {
     delay(1);
   }
 
-  String html = "<html>\r\n<body>\r\n<input type=\"button\" id=\"btn_on\" value=\"FORWARD\" style=\"font-size: 64pt;\"/><br/><br/>\r\n<input type=\"button\" id=\"btn_off\" value=\"STOP\" style=\"font-size: 64pt;\"/><br/>\r\n</body>\r\n<script>\r\nbtn_on.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/1\", true);\r\nreq.send(null);\r\n}\r\nbtn_off.onclick = function(){\r\nvar req = new XMLHttpRequest();\r\nreq.open(\"GET\", \"/gpio/0\", true);\r\nreq.send(null);\r\n}\r\n</script>\r\n</html>";
-
   String req = client.readStringUntil('\r');
 
   client.flush();
 
-  if (req.indexOf("/gpio/0") != -1) {
+  if (req.indexOf("/gpio/5") != -1) {
     Serial.write(0x53);
   } else if (req.indexOf("gpio/1") != -1) {
     Serial.write(0x46);
+  } else if (req.indexOf("/gpio/3") != -1) {
+    Serial.write(0x4C);
   } else if (req.indexOf("/ HTTP") != -1) {
     client.print(html);
     client.flush();

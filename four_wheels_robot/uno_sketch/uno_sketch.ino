@@ -29,18 +29,19 @@ void loop() {
         run_motors(0, RELEASE, all_motors, get_size(all_motors));
         break;
       case 0x4C:
+        run_motors(255, BACKWARD, left_motors, get_size(left_motors));
+        run_motors(255, FORWARD, right_motors, get_size(right_motors));
+        break;
+      case 0x52:
         run_motors(255, FORWARD, left_motors, get_size(left_motors));
         run_motors(255, BACKWARD, right_motors, get_size(right_motors));
         break;
-      case 0x52:
-        run_motors(255, BACKWARD, left_motors, get_size(left_motors));
-        run_motors(255, FORWARD, right_motors, get_size(right_motors));  
-        break;
       case 0x42:
         run_motors(255, BACKWARD, all_motors, get_size(all_motors));
-        break;      
+        break;
     }
   }
+  delay(10);
 }
 
 

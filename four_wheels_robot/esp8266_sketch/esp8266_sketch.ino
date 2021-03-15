@@ -16,6 +16,8 @@ void setup() {
 
     server.begin();
   }
+
+  Serial.println(WiFi.localIP());
 }
 
 void loop() {
@@ -38,6 +40,10 @@ void loop() {
     Serial.write(0x46);
   } else if (req.indexOf("/gpio/3") != -1) {
     Serial.write(0x4C);
+  } else if (req.indexOf("/gpio/2") != -1){
+    Serial.write(0x42);
+  } else if (req.indexOf("/gpio/4") != -1) {
+    Serial.write(0x52);
   } else if (req.indexOf("/ HTTP") != -1) {
     client.print(html);
     client.flush();

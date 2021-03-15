@@ -23,6 +23,8 @@ void loop() {
     uint8_t cmd = Serial.read();
     switch (cmd) {
       case 0x46:
+        run_motors(0, RELEASE, all_motors, get_size(all_motors));
+        delay(100);
         run_motors(255, FORWARD, all_motors, get_size(all_motors));
         break;
       case 0x53:
@@ -37,6 +39,8 @@ void loop() {
         run_motors(255, BACKWARD, right_motors, get_size(right_motors));
         break;
       case 0x42:
+        run_motors(0, RELEASE, all_motors, get_size(all_motors));
+        delay(100);
         run_motors(255, BACKWARD, all_motors, get_size(all_motors));
         break;
     }

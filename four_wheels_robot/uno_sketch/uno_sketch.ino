@@ -12,6 +12,11 @@ AF_DCMotor *right_motors[2] = {&front_right_motor, &rear_right_motor};
 AF_DCMotor *left_motors[2] = {&front_left_motor, &rear_left_motor};
 
 void run_motors(int speed, int direction, AF_DCMotor **motors, uint8_t size_arr);
+void forward();
+void backward();
+void turn_to_left();
+void turn_to_right();
+void stopped();
 
 void setup() {
   run_motors(0, RELEASE, all_motors, get_size(all_motors));
@@ -19,33 +24,29 @@ void setup() {
 }
 
 void loop() {
+  delay(10);
   if (Serial.available()) {
     uint8_t cmd = Serial.read();
     switch (cmd) {
       case 0x46:
-        run_motors(0, RELEASE, all_motors, get_size(all_motors));
-        delay(100);
-        run_motors(255, FORWARD, all_motors, get_size(all_motors));
+        forward();
         break;
       case 0x53:
-        run_motors(0, RELEASE, all_motors, get_size(all_motors));
+        stopped();
         break;
       case 0x4C:
-        run_motors(255, BACKWARD, left_motors, get_size(left_motors));
-        run_motors(255, FORWARD, right_motors, get_size(right_motors));
+        turn_to_left();
         break;
       case 0x52:
-        run_motors(255, FORWARD, left_motors, get_size(left_motors));
-        run_motors(255, BACKWARD, right_motors, get_size(right_motors));
+        turn_to_right();
         break;
       case 0x42:
-        run_motors(0, RELEASE, all_motors, get_size(all_motors));
-        delay(100);
-        run_motors(255, BACKWARD, all_motors, get_size(all_motors));
+        backward();
+        break;
+      default:
         break;
     }
   }
-  delay(10);
 }
 
 
@@ -54,4 +55,28 @@ void run_motors(int speed, int direction, AF_DCMotor **motors, uint8_t size_arr)
     motors[i]->setSpeed(speed);
     motors[i]->run(direction);
   }
+}
+
+void forward() {
+  run_motors(0, RELEASE, all_motors, get_size(all_motors));
+  run_motors(255, FORWARD, all_motors, get_size(all_motors));
+}
+
+void backward() {
+  run_motors(0, RELEASE, all_motors, get_size(all_motors));
+  run_motors(255, BACKWARD, all_motors, get_size(all_motors));
+}
+
+void turn_to_left() {
+  run_motors(0, RELEASE, left_motors, get_size(left_motors));
+  run_motors(255, FORWARD, right_motors, get_size(right_motors));
+}
+
+void turn_to_right() {
+  run_motors(255, FORWARD, left_motors, get_size(left_motors));
+  run_motors(0, RELEASE, right_motors, get_size(right_motors));
+}
+
+void stopped() {
+  run_motors(0, RELEASE, all_motors, get_size(all_motors));
 }

@@ -29,13 +29,11 @@ void loop() {
 
   while (client.connected()) {
     String req = client.readStringUntil('\r');
-    Serial.println(req);
     if (req.indexOf("on") != -1) {
       Serial.write(0x01);
     } else if (req.indexOf("off") != -1) {
       Serial.write(0x00);
     }
-
     while (client.available()) {
       client.read();
     }

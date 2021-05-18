@@ -15,6 +15,7 @@ void setup() {
   Serial.println(myIP);
 
   server.begin();
+  server.setNoDelay(true);
 }
 
 void loop() {

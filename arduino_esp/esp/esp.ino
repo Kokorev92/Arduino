@@ -25,6 +25,7 @@ void loop() {
   }
 
   Serial.println("Client connected");
+  client.setNoDelay(true);
 
   while (client.connected()) {
     String req = client.readStringUntil('\r');

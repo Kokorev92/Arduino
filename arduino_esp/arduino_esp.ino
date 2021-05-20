@@ -12,12 +12,13 @@ uint8_t b;
 void loop() {
   if(Serial.available() > 0) {
     b = Serial.read();
+    Serial.println((char)b);
   }
 
-  if(b == 1) {
+  if(b == 0x4F) {
     digitalWrite(RELAY_1, LOW);
   }
-  if(b == 0) {
+  if(b == 0x46) {
     digitalWrite(RELAY_1, HIGH);
   }
 }

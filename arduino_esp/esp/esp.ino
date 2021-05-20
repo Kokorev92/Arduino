@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid = "secret_point";
-const char* password = "00000000";
+const char* ssid = "esp_ap";
+const char* password = "12345678";
 
 WiFiServer server(80);
 
@@ -30,9 +30,9 @@ void loop() {
   while (client.connected()) {
     String req = client.readStringUntil('\r');
     if (req.indexOf("on") != -1) {
-      Serial.write(0x01);
+      Serial.write(0x4F);
     } else if (req.indexOf("off") != -1) {
-      Serial.write(0x00);
+      Serial.write(0x46);
     }
     while (client.available()) {
       client.read();

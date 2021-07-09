@@ -2,6 +2,6 @@
 
 template<typename... Args>
 void debug_print(const Args&... args) {
-    ((Serial.print(args), Serial.print(" ")), ...);
+    ((Serial.print(args)), ...);
     Serial.println();
 }

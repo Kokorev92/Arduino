@@ -6,16 +6,22 @@ const char* password = "12345678";
 WiFiServer server(80);
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(19200);
 
   WiFi.mode(WIFI_AP);
-  WiFi.softAP(ssid, password);
+  if(WiFi.softAP(ssid, password)){
+    Serial.println("Soft-AP strted!");
+  } else {
+    Serial.println("Error!");
+    while(true){
+      delay(10);
+    }
+  }
 
   IPAddress myIP = WiFi.softAPIP();
   Serial.println(myIP);
 
   server.begin();
-  server.setNoDelay(true);
 }
 
 void loop() {
@@ -28,14 +34,8 @@ void loop() {
   client.setNoDelay(true);
 
   while (client.connected()) {
-    String req = client.readStringUntil('\r');
-    if (req.indexOf("on") != -1) {
-      Serial.write(0x4F);
-    } else if (req.indexOf("off") != -1) {
-      Serial.write(0x46);
-    }
-    while (client.available()) {
-      client.read();
+    while(client.available()){
+      Serial.write(client.read());
     }
   }
 }

@@ -48,12 +48,8 @@ void loop() {
   int humidity = dht.readHumidity();
   int light = analogRead(light_pin);
 
-  //  Serial.println(curr_time);
-  //  Serial.println(prev_time);
-  //  Serial.println(curr_time - prev_time);
-  //  Serial.println("-------------");
   if ((curr_time - prev_time) >= 10000) {
-    String log_string = String(hours) + ':' + String(mins) + ':' + String(secs) + ';' + String(temperature) + ';' + String(humidity) + ';' + String(light);
+    String log_string = String(hours) + ':' + String(mins) + ':' + String(secs) + ',' + String(temperature) + ',' + String(humidity) + ',' + String(light);
 
     File log_file = SD.open("log.csv", FILE_WRITE);
     if (log_file) {

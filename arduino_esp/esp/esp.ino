@@ -9,13 +9,8 @@ void setup() {
   Serial.begin(19200);
 
   WiFi.mode(WIFI_AP);
-  if(WiFi.softAP(ssid, password)){
+  if (WiFi.softAP(ssid, password)) {
     Serial.println("Soft-AP strted!");
-  } else {
-    Serial.println("Error!");
-    while(true){
-      delay(10);
-    }
   }
 
   IPAddress myIP = WiFi.softAPIP();
@@ -30,11 +25,10 @@ void loop() {
     return;
   }
 
-  Serial.println("Client connected");
   client.setNoDelay(true);
 
   while (client.connected()) {
-    while(client.available()){
+    while (client.available()) {
       Serial.write(client.read());
     }
   }

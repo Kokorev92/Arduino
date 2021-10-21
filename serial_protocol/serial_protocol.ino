@@ -8,7 +8,7 @@ const uint8_t pins[] = {relay_1_pin, relay_2_pin};
 struct packet_t {
   bool relay_1 : 1;
   bool relay_2 : 1;
-};
+} __attribute__((packed));
 
 packet_t packet;
 Parser parser;
@@ -32,8 +32,9 @@ void loop() {
 
   if(parser.get_command(command)){
     memcpy(&packet, &command, sizeof(command));
+    
   }
 
-  digitalWrite(relay_1_pin, packet.relay_1);
-  digitalWrite(relay_2_pin, packet.relay_2);
+  digitalWrite(relay_1_pin, !packet.relay_1);
+  digitalWrite(relay_2_pin, !packet.relay_2);
 }

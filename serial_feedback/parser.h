@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <string.h>
+#include "timeout.h"
 
 enum class STATE {
   IDLE = 0,
@@ -24,6 +25,8 @@ class Parser {
     uint8_t buffer_[256];
     uint8_t payload_length_ = 0;
     uint8_t data_counter_   = 0;
+
+    systools::Timeout timeout_ = {500 , false};
 
     STATE parser_state_ = STATE::IDLE;
 

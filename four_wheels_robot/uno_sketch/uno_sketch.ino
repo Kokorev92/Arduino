@@ -59,22 +59,24 @@ void run_motors(int speed, int direction, AF_DCMotor **motors, uint8_t size_arr)
 
 void forward() {
   run_motors(0, RELEASE, all_motors, get_size(all_motors));
+  delay(500);
   run_motors(255, FORWARD, all_motors, get_size(all_motors));
 }
 
 void backward() {
   run_motors(0, RELEASE, all_motors, get_size(all_motors));
+  delay(500);
   run_motors(255, BACKWARD, all_motors, get_size(all_motors));
 }
 
 void turn_to_left() {
-  run_motors(0, RELEASE, left_motors, get_size(left_motors));
+  run_motors(255, BACKWARD, left_motors, get_size(left_motors));
   run_motors(255, FORWARD, right_motors, get_size(right_motors));
 }
 
 void turn_to_right() {
   run_motors(255, FORWARD, left_motors, get_size(left_motors));
-  run_motors(0, RELEASE, right_motors, get_size(right_motors));
+  run_motors(255, BACKWARD, right_motors, get_size(right_motors));
 }
 
 void stopped() {

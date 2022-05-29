@@ -1,0 +1,34 @@
+<html>
+
+<body>
+    <button class="btn" onclick="relay_1_click()">РЕЛЕ 1</button>
+    <button class="btn" onclick="relay_2_click()">РЕЛЕ 2</button>
+</body>
+
+<style>
+    .btn {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        background-color: aqua;
+        font-size: large;
+    }
+</style>
+
+<script>
+    function relay_1_click() {
+        xhttp = new XMLHttpRequest()
+        xhttp.open("GET", "/REL/1", true)
+        xhttp.send()
+        console.log("rele 1")
+    }
+
+    function relay_2_click() {
+        xhttp = new XMLHttpRequest()
+        xhttp.open("GET", "/REL/2", true)
+        xhttp.send()
+        console.log("rele 2")
+    }
+</script>
+
+</html>

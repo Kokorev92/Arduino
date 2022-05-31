@@ -27,12 +27,14 @@ void setup() {
 
 void loop() {
   packet[1] = cmd;
+  packet[3] = 0;
+  
   for (int i = 0; i < 3; i++) {
     packet[3] += packet[i];
   }
 
-  //  Serial.write(packet, 4);
-  Serial.println((int)cmd);
+  Serial.write((char*)packet, (size_t)4);
+//  Serial.println((int)cmd);
   delay(100);
 
   WiFiClient client = server.available();
@@ -44,7 +46,7 @@ void loop() {
 
   String req = client.readStringUntil('\r');
   client.flush();
-  
+
   if (req.indexOf("/REL/1") != -1) {
     cmd ^= (1 << 0);
     return;
